@@ -15,7 +15,7 @@ class NotificationService
 
     /**
      * @param SerializerInterface $serializer
-     * @param iterable $notificationRules
+     * @param NotificationRuleInterface[]|iterable $notificationRules
      */
     public function __construct(SerializerInterface $serializer, iterable $notificationRules)
     {
@@ -28,9 +28,7 @@ class NotificationService
         $notifications = [];
 
         /** @var NotificationRuleInterface $rule */
-        foreach ($this->notificationRules as $ruleGenerator) {
-            $rule = $ruleGenerator->getIterator()->current();
-
+        foreach ($this->notificationRules as $rule) {
             if ($rule->IsValid($user)) {
                 $notifications[] = $rule->GetNotification();
             }
